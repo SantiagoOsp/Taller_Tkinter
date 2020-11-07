@@ -1,41 +1,133 @@
+#from tkinter.ttk import Notebook
 import tkinter as tk
 from tkinter import ttk
+from tkinter import *
 
 def init_window():
 
     #     Creamos la ventana y le damos nombre
-    window = tk.Tk()
+    window = Tk()
     window.title('MY FIRST INTERFACE WITH TKINTER')
     window.geometry('400x250')
+    s = ttk.Style()
+    s.theme_use('clam')
+    #window.config(style = 'clam')
+
+    #     Menus desplegables
+    def abrir():
+        ventAbrir = Tk()
+        ventAbrir.geometry('450x200')
+        ventAbrir.title('Aca no hay nada')
+        Mensaje_Abrir = Label(ventAbrir,text = 'Lo siento   xD',font = ('Times NeW Roman',30))
+        Mensaje_Abrir.grid(column=230,row=100)
+        ventAbrir.mainloop()
+
+    def Notebook_window():
+        n_window = Tk()
+        n_window.geometry('400x200')
+        n_window.title("Notebooks")
+
+        menuBa2 = Menu(n_window)
+
+        archivo_b = Menu(menuBa2)
+        archivo_b.add_command(label = 'Abrir', command = abrir)
+        archivo_b.add_command(label = 'Nuevo')
+        archivo_b.add_command(label = 'Guardar')
+        archivo_b.add_command(label = 'Cerrar')
+        archivo_b.add_separator()
+        archivo_b.add_command(label = 'Salir', command = n_window.destroy)
+
+        edicion_b = Menu(menuBa2)
+        edicion_b.add_command(label = 'Copiar')
+        edicion_b.add_command(label = 'Pegar')
+        edicion_b.add_command(label = 'Cortar')
+        edicion_b.add_separator()
+        edicion_b.add_command(label = 'Deshacer')
+        edicion_b.add_command(label = 'Rehacer')
+
+        ayuda_b = Menu(menuBa2)
+        ayuda_b.add_command(label = 'Info')
+        ayuda_b.add_command(label = 'No se')
+
+        menuBa2.add_cascade(label = 'Archivo', menu = archivo_b)
+        menuBa2.add_cascade(label = 'Edicion', menu = edicion_b)
+        menuBa2.add_cascade(label = 'Ayuda', menu = ayuda_b)
+        n_window.config(menu = menuBa2)
+
+        pestañas = ttk.Notebook(n_window)
+        pest1 = Frame(pestañas)
+        pest2 = Frame(pestañas)
+        pestañas.add(pest1, text = 'Notebook 1')
+        pestañas.pack(expand = 1,fill = 'both')
+        pestañas.add(pest2, text = 'Notebook 2')
+        pestañas.pack(expand = 2, fill = 'both')
+        pestañas.forget(pest2)
+
+        n_window.mainloop()
+
+    menuBa = Menu(window)
+
+    archivo_b = Menu(menuBa)
+    archivo_b.add_command(label = 'Abrir', command = abrir)
+    archivo_b.add_command(label = 'Nuevo')
+    archivo_b.add_command(label = 'Guardar')
+    archivo_b.add_command(label = 'Cerrar')
+    archivo_b.add_separator()
+    archivo_b.add_command(label = 'Salir', command = window.destroy)
+
+    edicion_b = Menu(menuBa)
+    edicion_b.add_command(label = 'Copiar')
+    edicion_b.add_command(label = 'Pegar')
+    edicion_b.add_command(label = 'Cortar')
+    edicion_b.add_separator()
+    edicion_b.add_command(label = 'Deshacer')
+    edicion_b.add_command(label = 'Rehacer')
+
+    notebooks = Menu(menuBa)
+    notebooks.add_command(label = 'Abrir Notebooks',command = Notebook_window)
+
+    ayuda_b = Menu(menuBa)
+    ayuda_b.add_command(label = 'Info')
+    ayuda_b.add_command(label = 'No se')
+
+    menuBa.add_cascade(label = 'Archivo', menu = archivo_b)
+    menuBa.add_cascade(label = 'Edicion', menu = edicion_b)
+    menuBa.add_cascade(label = 'Notebooks', menu = notebooks)
+    menuBa.add_cascade(label = 'Ayuda', menu = ayuda_b)
+    window.config(menu = menuBa)
+
+    #     Modificar Botones
+    #ttk.Style().configure("TButton", padding = 6 , )
 
     #     Ponemos texto dentro de la ventana
-    label = tk.Label(window, text='Calculadora', font=('Arial Bold', 13))
-    label.grid(column=0, row=0)
+    label = tk.Label(window, text='Calculadora', pady = 2, font=('Arial Bold', 13))
+    label.grid(column=2, row=1, columnspan = 2, sticky = 'nsew')
+    #label.rowconfigure(1, weight = 1)
 
     #     Cuadros de texto donde se ingresa el valor
-    entrada1 = tk.Entry(window, width = 10)
-    entrada2 = tk.Entry(window, width = 10)
-    entrada1.grid(column=1, row=1)
-    entrada2.grid(column=1, row=2)
+    entrada1 = Spinbox(window, from_=0,to=1000,state = 'normal')
+    entrada1.grid(column=3, row=2)
+    entrada2 = Spinbox(window, from_=0, to=1000, state = 'normal')
+    entrada2.grid(column=3, row=3)
 
     #     Texto que indica el valor que vamos a ingresar y opcion deseada
     label_entrada1 = tk.Label(window,text = 'Ingrese el primer valor: ',font = ('Arial Bold',9))
-    label_entrada1.grid(column = 0, row = 1)
+    label_entrada1.grid(column = 2, row = 2, sticky = 'nsew'        )
 
     label_entrada2 = tk.Label(window, text = 'Ingrese el segundo valor: ', font = ('Arial Bold',9))
-    label_entrada2.grid(column = 0, row = 2)
+    label_entrada2.grid(column = 2, row = 3, sticky = 'nsew')
 
     label_operador = tk.Label(window, text = 'Escoja su operacion deseada ', font = ('Arial Bold',9))
-    label_operador.grid(column = 0, row = 3)
+    label_operador.grid(column = 2, row = 4, sticky = 'nsew')
 
     #     Caja de operaciones
     combo_operadores = ttk.Combobox(window)
     combo_operadores['values'] = ['+', '-', '*', '/', 'pow']
     combo_operadores.current(0)
-    combo_operadores.grid(column = 1, row = 3)
+    combo_operadores.grid(column = 3, row = 4, sticky = 'nsew')
 
     label_resultado = tk.Label(window, text = 'Resultado: ', font = ('Arial Bold', 15))
-    label_resultado.grid(column = 0, row = 5)
+    label_resultado.grid(column = 2, row = 6)
 
     #      Boton calcular
     boton_calcular = tk.Button(window,
@@ -48,7 +140,7 @@ def init_window():
                             bg = 'Cyan',
                             fg = 'Black')
 
-    boton_calcular.grid(column = 1, row = 4)
+    boton_calcular.grid(column = 3, row = 5)
 
     window.mainloop()
 
