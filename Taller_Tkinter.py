@@ -2,6 +2,7 @@
 import tkinter as tk
 from tkinter import ttk
 from tkinter import *
+from tkinter import messagebox
 
 def init_window():
 
@@ -22,6 +23,25 @@ def init_window():
         Mensaje_Abrir.grid(column=230,row=100)
         ventAbrir.mainloop()
 
+    def Nuevo():
+        ventNuevo = Tk()
+        ventNuevo.geometry('450x200')
+        ventNuevo.title('Nuevo')
+        Mensaje_ventNuevo = Label(ventNuevo,text = 'Ingresa el texto deseado',font = ('Times NeW Roman',30))
+        Mensaje_ventNuevo.grid(column=0,row=0)
+        cuadrotxt_Nuevo = Entry(ventNuevo)
+        cuadrotxt_Nuevo.grid(column = 0, row = 1)
+        var_chk = BooleanVar()
+        var_chk.set(False)
+        cuad_ch = Checkbutton(ventNuevo, text = 'No eres un robot', var = var_chk)
+        cuad_ch.grid(column = 0, row = 2)
+        hecho = Button(ventNuevo, text = 'Listo!', bg = 'Cyan', command = ventNuevo.destroy)
+        hecho.grid(column = 0, row = 3)
+        ventNuevo.mainloop()
+
+    def Informacion():
+        messagebox.showinfo('Info Ventana','Esta ventana es de prueba para la libreria Tkinter')
+
     def Notebook_window():
         n_window = Tk()
         n_window.geometry('400x200')
@@ -31,7 +51,7 @@ def init_window():
 
         archivo_b = Menu(menuBa2)
         archivo_b.add_command(label = 'Abrir', command = abrir)
-        archivo_b.add_command(label = 'Nuevo')
+        archivo_b.add_command(label = 'Nuevo', command = Nuevo)
         archivo_b.add_command(label = 'Guardar')
         archivo_b.add_command(label = 'Cerrar')
         archivo_b.add_separator()
@@ -61,7 +81,6 @@ def init_window():
         pestañas.pack(expand = 1,fill = 'both')
         pestañas.add(pest2, text = 'Notebook 2')
         pestañas.pack(expand = 2, fill = 'both')
-        pestañas.forget(pest2)
 
         n_window.mainloop()
 
@@ -69,7 +88,7 @@ def init_window():
 
     archivo_b = Menu(menuBa)
     archivo_b.add_command(label = 'Abrir', command = abrir)
-    archivo_b.add_command(label = 'Nuevo')
+    archivo_b.add_command(label = 'Nuevo', command = Nuevo)
     archivo_b.add_command(label = 'Guardar')
     archivo_b.add_command(label = 'Cerrar')
     archivo_b.add_separator()
@@ -87,7 +106,7 @@ def init_window():
     notebooks.add_command(label = 'Abrir Notebooks',command = Notebook_window)
 
     ayuda_b = Menu(menuBa)
-    ayuda_b.add_command(label = 'Info')
+    ayuda_b.add_command(label = 'Info', command = Informacion)
     ayuda_b.add_command(label = 'No se')
 
     menuBa.add_cascade(label = 'Archivo', menu = archivo_b)
